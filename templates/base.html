@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang ="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="ie,edge,safari,chrome=1.0">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <link rel="stylesheet" href="{{url_for('static',filename='css/cam.css')}}">       
+        <link rel="stylesheet" href="{{url_for('static',filename='css/w3.css')}}">
+        <title>Student 1.0</title>
+    </head>
+    <body>
+        <br><br>
+        <div class="w3-padding-large w3-indigo">
+            <h3>{{ headername | upper }}</h3>
+            <div class="w3-bar">
+                <div class="w3-bar-item w3-right">
+                    {%block menu%}
+                    {%endblock%}
+                </div>
+            </div>
+        </div>
+        <div class="w3-padding-large">
+            <div class="w3-panel w3-amber">
+                {%with messages=get_flashed_messages()%}
+                    {%for message in messages%}
+                        <p>
+                            {{ message }}
+                        </p>
+                    {%endfor%}
+                {%endwith%}
+            </div>
+            {%block content%}
+            {%endblock%}
+        </div>
+        <script src="..//static/js/myjs.js"></script>
+    </body>
+<html>

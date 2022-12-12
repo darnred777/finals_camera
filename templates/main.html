@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{%block menu%}
+    <button onclick="controlmodal('studentmodal','block')" class="w3-btn w3-blue">+ADD</button>
+    <a href="/logout" class="w3-btn w3-red">LOG-OUT</a>
+{%endblock%}
+{%block content%}
+ 
+    <br>
+    <table class="w3-table-all">
+        <tr>
+            {%for h in head%}
+                <th>{{ h | upper }}</th>
+            {%endfor%}
+            
+        </tr>
+        {%for students in studentlist%}
+            <tr>
+                <td>{{ students['idno'] }}</td>
+                <td>{{ students['lastname'] |upper }}</td>
+                <td>{{ students['firstname'] |upper }}</td>
+                <td>{{ students['course'] |upper }}</td>
+                <td>{{ students['level'] |upper }}</td>
+                <td>
+
+                    <button onclick=updatedata("{{ students['idno'] }}","{{ students['lastname'] |upper }}","{{ students['firstname'] |upper }}","{{ students['course'] |upper }}","{{ students['level'] |upper }}")>&#9998;</button>
+                    <button onclick="deletedata ({{ students['idno'] }})">&times;</button>
+                </td>
+            </tr>
+        {%endfor%}
+    </table>
+    <!--modal-->
+        <div class="w3-modal" id="studentmodal">
+            <div class="w3-modal-content w3-animate-top">
+                <div class="w3-container w3-blue">
+                    <h3>UPDATE STUDENT</h3>
+                    <span onclick="controlmodal('studentmodal','none')" class="w3-button w3-display-topright">&times;</span>
+                </div>                
+                <form action="/savedata" method="post">
+                    <!--flag=0, addstudent-->
+                    <!--flag=1, updatestudent-->
+                    <br><br>
+                    <div class="w3-row-padding">
+                        <div class="w3-half w3-card-4 w3-round-xlarge">  
+                            <br>
+                            <input type='hidden' name='flag' id='flag' value=''>
+                            <center><div id="my_camera"></div><br></center>
+                            <input type="text" name="idno" id="idno" class="w3-input w3-border" placeholder="IDNO"><br>
+                            <input type="text" name="lastname" id="lastname" class="w3-input w3-border" placeholder="LASTNAME"><br>
+                            <input type="text" name="firstname" id="firstname" class="w3-input w3-border" placeholder="FIRSTNAME"><br>
+                            <select type="text" name="course" id="course" class="w3-select w3-border" placeholder="COURSE"><br>
+                                <option>ACT</option>
+                                <option>BSIT</option>
+                                <option>BSIS</option>
+                                <option>BSIM</option>
+                                <option>BSCS</option>
+                            </select>
+                            <br><br>
+                            <select type="text" name="level" id="level" class="w3-select w3-border" placeholder="LEVEL"><br>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                            <br><br>
+                            <button onclick="take_snapshot()" class="w3-button w3-green">TAKE SNAPSHOT</button>
+                            <button onclick="save_snapshot()" class="w3-button w3-green">SAVE SNAPSHOT</button>
+                            <br><br>
+                        </div>
+                        <div class="w3-half">
+                            <center><div id="result"></div></center><br></br>
+                            <div class="w3-padding w3-border" id="myidno">IDNO</div>
+                            <div class="w3-padding w3-border" id="mylastname">LASTNAME</div>
+                            <div class="w3-padding w3-border" id="myfirstname">FIRSTNAME</div>
+                            <div class="w3-padding w3-border" id="mycourse">COURSE</div>
+                            <div class="w3-padding w3-border" id="mylevel">LEVEL</div>
+                        </div>
+                    </div>    
+                </form>                
+            </div>
+        </div>
+    <!--end modal-->
+    
+    <script>
+        function controlmodal(modalname,control){
+            document.getElementById(modalname).style.display=control;
+        }
+        function deletedata(idno){
+            var ok = confirm("Delete this Data?")
+            if(ok){
+                location.href="/deletedata?idno="+idno
+            }
+        }
+        function updatedata(idno,lastname,firstname,course,level){
+            controlmodal('studentmodal','block')
+            document.getElementById('idno').value=idno;
+            document.getElementById('firstname').value=lastname;
+            document.getElementById('lastname').value=firstname;
+            document.getElementById('course').value=course;
+            document.getElementById('level').value=level;
+            document.getElementById('flag').value=1;
+        }
+    </script>
+{%endblock%}

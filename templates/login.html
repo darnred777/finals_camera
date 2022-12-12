@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+    <br>
+    <div class="w3-row">
+        <div class="w3-col" style="width:25%">&nbsp;</div>
+            <div class="w3-col w3-card-4" style="width:50%">
+                <div class="w3-padding-large w3-blue">
+                    <h3>LOGIN</h3>
+                </div>
+                <div class="w3-padding-large">
+                    <form action="/login" method="post">
+                        <label><b>USERNAME</b></label>
+                        <input type="text" name="username" id="username" class="w3-input w3-border">
+                        <label><b>PASSWORD</b></label>
+                        <input type="text" name="password" id="password" class="w3-input w3-border">
+                        <br><br>
+                        <input type="submit" value="LOGIN" class="w3-button w3-blue w3-right">
+                        <br><br>
+                    </form>
+                </div>   
+            </div>
+        </div class="w3-col" style="width:25%">&nbsp;</div>
+    </div>
+{% endblock %}
